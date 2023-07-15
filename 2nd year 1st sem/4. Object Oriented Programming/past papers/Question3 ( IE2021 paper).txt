@@ -1,0 +1,75 @@
+
+import java.util.Scanner;
+import java.util.InputMismatchException;
+
+class MarksException extends Exception {
+   private float marks;
+   public MarksException(float marks) {
+      this.marks = marks;
+   }
+   public float getMarks() {
+      return marks;
+   } 
+}
+
+class Student {
+   private int id;
+   private String name;
+   private float marks[];
+   private int noOfSubjects;
+
+   public Student(int id, String name) {
+      this.id = id;
+      this.name = name;
+      marks = new float[5];
+   }
+
+   public float inputMarks(int no) throws MarksException {
+      float mark;
+      Scanner myscanner = new Scanner(System.in);
+      System.out.print("Enter Marks " + no + " : ");
+      mark = myscanner.nextFloat();
+      if (mark < 0 || mark > 100)
+          throw new  MarksException(mark);
+      return mark;
+   }
+
+   public void input() {
+      Scanner myscanner = new Scanner(System.in);
+      try {
+         System.out.print("No of Subjects : ");
+         noOfSubjects = myscanner.nextInt();
+         for (int r = 0; r < noOfSubjects; r++) {
+            marks[r] = inputMarks(r);
+         }
+      } catch (MarksException e) {
+           System.out.println("Invalid Marks : " + e.getMarks());
+        }
+        catch (InputMismatchException e) {
+           System.out.println("Invalid value for no of Subjects ");
+        }
+   }
+ 
+   public float getAverage() {
+ 
+     float tot = 0, avg = -1;
+     for (int r=0; r<noOfSubjects; r++) {
+        tot += marks[r];
+     }
+     try {
+         avg = tot/noOfSubjects;
+      }
+      catch (ArithmeticException e) {
+         System.out.println("Division by zero error");
+      }
+      return avg;
+   }
+}
+
+class MainApp {
+   public static void main(String args[]) {
+      Student mystudent = new Student(10, "Tilak");
+      mystudent.input();
+      System.out.println("Average is " + mystudent.getAverage());
+   }
+}

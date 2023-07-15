@@ -1,0 +1,49 @@
+class CharArray{
+
+	 char myCharArray[];
+	
+
+	public CharArray(char[] myCharArray) {
+		this.myCharArray = myCharArray;
+	}
+	
+	public void swapFirstAndLast(){
+		char m = myCharArray[0];
+		myCharArray[0] = myCharArray[myCharArray.length - 1];
+		myCharArray[myCharArray.length - 1] = m ;
+	}
+	
+	  void DisplayArray() {
+		
+		for (int i = 0 ; i < myCharArray.length ; i++){
+			
+			System.out.print(myCharArray[i] + " ");
+		}
+		System.out.println();
+	}
+	
+	  void DisplayString() {
+		System.out.println(String.valueOf(myCharArray));
+	}
+}
+
+public class Main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		 
+				
+				char A[] = {'S' , 'R' , 'I' , 'L' , 'A' , 'N' , 'K' , 'A'};
+				
+				CharArray array = new CharArray(A);
+				
+				array.DisplayString();
+				array.swapFirstAndLast();
+				array.DisplayArray();
+				array.DisplayString();
+			}
+		 
+	}
+ 
+
+
