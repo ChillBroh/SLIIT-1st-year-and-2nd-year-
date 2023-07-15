@@ -1,0 +1,56 @@
+RIPv2 Configurations
+
+Malabe(config)#router RIP
+Malabe(config-router)#version 2
+Malabe(config-router)#network 172.16.0.0
+Malabe(config-router)#network 60.0.0.0
+Malabe(config-router)#network 60.0.0.8
+
+Metro(config)#router RIP
+Metro(config-router)#version 2
+Metro(config-router)#network 172.17.0.0
+Metro(config-router)#network 60.0.0.0
+Metro(config-router)#network 60.0.0.4
+
+Matara(config)#router RIP
+Matara(config-router)#version 2
+Matara(config-router)#network 172.18.0.0
+Matara(config-router)#network 60.0.0.8
+Matara(config-router)#network 60.0.0.4
+
+#############################################
+Standard Access Control List Configurations.
+*configured on closest router to the destination
+
+3.a
+Malabe(config)#access-list 3 permit host 172.17.0.2
+
+3.b
+Malabe(config)#access-list 3 deny host 172.18.0.2
+
+Malabe(config)#interface FastEthernet0/0
+Malabe(config-if)#ip access-group 3 out
+
+3.c
+Metro(config)#access-list 4 permit host 172.16.0.2
+Metro(config)#access-list 4 deny 172.16.0.0 0.0.255.255
+
+Metro(config)#interface FastEthernet0/0
+Metro(config-if)#ip access-group 4 out
+
+#################################################
+Extended ACL Configurations
+*configured on closest router to the source
+
+R1(config)#access-list 110 deny tcp host 172.16.0.10 host 172.17.0.100 eq 80
+R1(config)#access-list 110 deny tcp host 172.16.0.20 host 172.17.0.100 eq ftp
+R1(config)#access-list 110 permit ip any any
+R1(config)#interface FastEthernet0/0
+R1(config-if)#ip access-group 110 in
+
+R3(config)#access-list 120 deny tcp host 172.18.0.2 host 172.17.0.100 eq ftp
+R3(config)#access-list 120 permit ip any any
+R3(config)#interface FastEthernet0/0
+R3(config-if)#ip access-group 120 in
+
+
