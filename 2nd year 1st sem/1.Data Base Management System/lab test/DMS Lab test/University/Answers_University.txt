@@ -1,0 +1,33 @@
+-------------------1----------------
+--1
+select sname from student_K where address like '%matara'
+and gpa=(select max(gpa) from student_K where address like '%Matara')
+
+--2
+select s.sname, count(g.sid) from student_K s, grades_K g where s.sid = g.sid 
+group by s.sname
+having count(g.sid) > 2
+
+--3
+select s.sname, count(g.sid) from student_K s, grades_K g where s.sid = g.sid 
+and g.grade='B' and s.sname in (select s.sname from student_K s, grades_K g where s.sid = g.sid 
+group by s.sname
+having count(g.sid) > 2) group by s.sname
+
+
+
+------------2--------------------
+--1
+select s.sname, s.gpa, g.grade from student_K s, course_K c, grades_K g
+where s.sid= g.sid and g.cid =c.cid and s.gpa > 3.0 and g.grade = 'A' 
+and c.cname = 'Database Management Systems IT'
+
+--2
+select s.sname, count(g.sid) as 'completed#' from student_K s left outer join grades_K g 
+on s.sid = g.sid where (s.sname like '%i%')
+group by s.sname
+
+
+--3
+select batch, avg(gpa) from student_K group by batch having avg(gpa) >= all
+(select avg(gpa) from student_K group by batch)

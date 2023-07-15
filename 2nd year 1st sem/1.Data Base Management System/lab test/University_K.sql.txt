@@ -1,0 +1,59 @@
+-- CREATE DATABASE SCHEMA
+-- student table
+create table student_K (
+sid 	char(10) primary key, 	-- student's id
+sname 	varchar(100),		-- student's name
+address varchar(200),		-- student's address
+gpa 	float,			-- student's grade point average
+batch 	char(2))		-- batch which student belongs to
+go
+
+-- course table
+create table course_K (
+cid 	char(4) primary key,	-- course's id  
+cname	varchar(100) unique,	-- name of course
+credits	int)			-- credits for unit  
+go
+
+-- grades table
+create table grades_K (
+sid	char(10),		-- student's id	
+cid	char(4),		-- course's id
+grade	char,			-- grade earned by student for course
+primary key(sid, cid),
+foreign key (sid) references student_K,
+foreign key (cid) references course_K)
+go
+
+-- LOADING DATABASE SCHEMA
+-- Loading student table
+insert into student_K values ('DIT/05/001', 'Sampath Weerasinghe', '101 Galle Rd., Col-3', 3.2, 'Y1')
+insert into student_K values ('DIT/05/011', 'Dulani Wijekoon', '101 Matara Rd., Matara', 2.8, 'Y1')
+insert into student_K values ('DIT/05/131', 'Srinivas Sivalingam ', '22/3B, Polhengoda Rd., Col-6', 3.1, 'Y2')
+insert into student_K values ('DIT/05/021', 'Ajith Makumbura', 'Madpatha Watta, Madapatha', 2.9, 'Y2')
+insert into student_K values ('DIT/05/241', 'Mohommed Ismail', '121/4E Polhena Rd., Matara', 3.2, 'Y2')
+insert into student_K values ('DIT/06/345', 'Indika Hettige', null,null, 'Y1');
+go
+
+-- Loading course table
+insert into course_K values ('DBII', 'Database Management Systems II', 4)
+insert into course_K values ('SEII', 'Software Engineering II', 4)
+insert into course_K values ('IPE', 'Introduction to Programming Environments', 4)
+insert into course_K values ('ITP', 'Information Technology Project', 12)
+go
+
+-- Loading grades table
+insert into grades_K values ('DIT/05/001', 'DBII', 'B')
+insert into grades_K values ('DIT/05/001', 'SEII', 'B')
+insert into grades_K values ('DIT/05/001', 'IPE', 'C')
+insert into grades_K values ('DIT/05/001', 'ITP', 'A')
+insert into grades_K values ('DIT/05/011', 'DBII', 'B')
+insert into grades_K values ('DIT/05/011', 'SEII', 'C')
+insert into grades_K values ('DIT/05/011', 'ITP', 'B')
+insert into grades_K values ('DIT/05/131', 'DBII', 'C')
+insert into grades_K values ('DIT/05/131', 'ITP', 'B')
+insert into grades_K values ('DIT/05/131', 'IPE', 'A')
+insert into grades_K values ('DIT/05/021', 'IPE', 'C')
+insert into grades_K values ('DIT/05/241', 'DBII', 'B')
+insert into grades_K values ('DIT/05/241', 'SEII', 'A')
+go

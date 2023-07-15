@@ -1,0 +1,45 @@
+select o.oid,c.name
+from orders o, customer c
+where c.cid = o.cid and c.gender = 'female' and c. address like %france%
+
+select o.cid
+from order o, orderitems I
+where o.oid = I.oid and PID NOT IN (select PID
+							from product p, maudacture m
+							where p.mi = m.mid and m. country = 'india'
+							and p.phone = 'phone')
+
+select c.cname, c.creditlimit
+from customer , order o, orderitems I
+where c.cid = o.cid and o.oid = I.oid
+group by c.cname, c.creditlimit
+having sum(I.qty)> 10
+
+create function totalprice (OID char(10) ) returns real
+as 
+begin
+declare  @total real
+sum @tota = sum(o.qty * p.unitprice)
+from orderitems o, product p
+where o.oid = @oid and o.pid = p.pid
+return @tot
+end
+
+create trigger chkweight
+on orderItems
+from insert,update 
+as 
+begin 
+declare @oid real
+declare @tot int
+select @oid = oid from inserted
+select @tot = sum(o.qty * p.unitprice)
+from orderitems o,product p
+where o.oid = @oid and o.pid = p.pid
+if @tot > 2000
+rollback transaction
+end 
+
+
+
+
