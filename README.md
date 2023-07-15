@@ -1,4 +1,4 @@
-# SLIIT
+
 This repository has all the lecture slides, presentations, assignments, quiz and final papers 
 
 <h1>For Project lab exercises and all the coding parts are in the below repositories</h1>
